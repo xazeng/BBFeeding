@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -68,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     statusBarHeight);
             statusView.setLayoutParams(params);
-            statusView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            TypedValue typedValue = new TypedValue();
+            getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
+            statusView.setBackgroundColor(typedValue.data);
 
             // 添加 statusView 到布局中
             ViewGroup decorView = (ViewGroup) getWindow().getDecorView();

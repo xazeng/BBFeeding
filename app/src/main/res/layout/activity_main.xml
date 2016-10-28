@@ -14,9 +14,10 @@
         android:background="?attr/colorPrimary"
         android:theme="?attr/actionBarTheme"
         android:minHeight="?attr/actionBarSize"
-        android:id="@+id/tool_bar"
+        app:title="@string/app_name"
+        app:titleTextColor="@android:color/white"
         app:logo="@drawable/ic_bbfeeding"
-        app:title="@string/app_name" />
+        android:id="@+id/tool_bar" />
 
     <android.support.v4.view.ViewPager
         android:layout_weight="1"
