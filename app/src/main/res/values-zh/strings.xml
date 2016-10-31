@@ -4,4 +4,11 @@
     <string name="tab_history_label">历史记录</string>
     <string name="tab_home_label">主页</string>
     <string name="tab_like_label">猜你喜欢</string>
+    <string name="alarm_volumn_label">音量</string>
+    <string name="alarm_type_label">提醒方式</string>
+    <string name="alarm_ringtone_label">铃声</string>
+    <string name="alarm_label">定时提醒</string>
+    <string name="alarm_interval_label">时间间隔</string>
+    <string name="reset_label">重置</string>
+    <string name="time_passed_label">距上一次已经过了</string>
 </resources>

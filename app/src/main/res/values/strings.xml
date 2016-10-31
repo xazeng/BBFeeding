@@ -3,4 +3,11 @@
     <string name="tab_home_label">Home</string>
     <string name="tab_history_label">History</string>
     <string name="tab_like_label">Like</string>
+    <string name="time_passed_label">Time passed since the last feeding</string>
+    <string name="reset_label">Reset</string>
+    <string name="alarm_label">Alarm</string>
+    <string name="alarm_interval_label">Interval</string>
+    <string name="alarm_ringtone_label">Ringtone</string>
+    <string name="alarm_type_label">Alarm Type</string>
+    <string name="alarm_volumn_label">Volumn</string>
 </resources>

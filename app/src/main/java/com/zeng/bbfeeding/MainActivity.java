@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         mPagePosition = 0;
         mPages = new Fragment[]{
-                HomePage.newInstance(),
-                HistoryPage.newInstance(),
-                LikePage.newInstance(),
+                new HomePage(),
+                new HistoryPage(),
+                new LikePage(),
         };
         mTabIds = new int[]{
                 R.id.tab_home,
