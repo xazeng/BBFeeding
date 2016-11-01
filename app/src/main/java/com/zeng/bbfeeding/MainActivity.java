@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         initToolBar();
         initViewPager();
         initBottomBar();
+
+        Data.getInstance().init(this);
         return;
     }
 
@@ -128,5 +130,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Data.getInstance().save();
     }
 }

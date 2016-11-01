@@ -9,6 +9,8 @@
     <string name="alarm_ringtone_label">铃声</string>
     <string name="alarm_label">定时提醒</string>
     <string name="alarm_interval_label">时间间隔</string>
-    <string name="reset_label">重置</string>
+    <string name="reset_timing_label">重置计时</string>
     <string name="time_passed_label">距上一次已经过了</string>
+    <string name="start_timing_label">开始计时</string>
+    <string name="feed_button_label">马上喂奶</string>
 </resources>
