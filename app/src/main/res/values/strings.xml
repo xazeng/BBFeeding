@@ -12,4 +12,19 @@
     <string name="alarm_volumn_label">Volumn</string>
     <string name="start_timing_label">Start Timing</string>
     <string name="feed_button_label">Feed Now</string>
+    <string name="reset_timing_check_dialog_content">Are you sure to reset current timing?</string>
+    <string name="feeding_pattern_formula">Formula</string>
+    <string name="feeding_pattern_breast">Breast-feeding</string>
+    <string name="breast_left_label">Left</string>
+    <string name="breast_right_label">Right</string>
+    <string name="breast_interval_edittext_hint">(minite)</string>
+    <string name="breast_side_label">Which Side:</string>
+    <string name="breast_interval_label">Interval:</string>
+    <string name="formula_intake_edittext_hint">(ml)</string>
+    <string name="formula_intake_label">Intake</string>
+    <string name="last_breast_feeding_info_format">Last Feeding: %1$02d:%2$02d, breast(%3$s), %4$s(min).</string>
+    <string name="left">left</string>
+    <string name="right">right</string>
+    <string name="last_formula_feeding_info_format">Last Feeding: %1$02d:%2$02, formula, %3$s(ml).</string>
+    <string name="last_feeding_info_default">Last Feeding Information: ...</string>
 </resources>

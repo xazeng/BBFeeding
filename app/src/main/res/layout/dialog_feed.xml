@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/listPreferredItemHeightSmall"
+        android:orientation="horizontal"
+        android:id="@+id/pattern_radiogroup">
+
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/breast_radiobutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:background="@drawable/feeding_pattern_button_background"
+            android:textColor="@drawable/feeding_pattern_button_textcolor"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/feeding_pattern_breast"/>
+
+        <RadioButton
+            android:id="@+id/formula_radiobutton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:background="@drawable/feeding_pattern_button_background"
+            android:textColor="@drawable/feeding_pattern_button_textcolor"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/feeding_pattern_formula"/>
+
+    </RadioGroup>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="?attr/dialogPreferredPadding">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/breast_panel">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:text="@string/breast_side_label" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:orientation="horizontal"
+                android:id="@+id/breast_radiogroup">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/breast_left_label"
+                    android:checked="true"
+                    android:id="@+id/breast_left_radiobutton" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/breast_right_label"
+                    android:id="@+id/breast_right_radiobutton" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:text="@string/breast_interval_label"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/breast_interval_edittext"
+                android:hint="@string/breast_interval_edittext_hint"
+                android:gravity="center_horizontal"/>
+
+        </GridLayout>
+
+        <GridLayout
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/formula_panel">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:text="@string/formula_intake_label"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:inputType="number"
+                android:ems="10"
+                android:hint="@string/formula_intake_edittext_hint"
+                android:gravity="center_horizontal"
+                android:id="@+id/formula_intake_edittext" />
+
+        </GridLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

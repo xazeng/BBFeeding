@@ -36,12 +36,12 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp" />
 
-                <android.support.v7.widget.AppCompatButton
+                <Button
                     android:text="@string/feed_button_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:id="@+id/feed_button" />
+                    android:id="@+id/feed_button"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/reset_timing_textview"
-                            android:textColor="@drawable/operate_timing_button_textcolor"
+                            android:textColor="@color/colorAccent"
                             android:background="@drawable/operate_timing_button_background"/>
                         <TextView
                             android:padding="3dp"
@@ -68,13 +68,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/start_timing_textview"
-                            android:textColor="@drawable/operate_timing_button_textcolor"
-                            android:background="@drawable/operate_timing_button_background"/>
+                            android:textColor="@color/colorAccent"
+                            android:background="@drawable/operate_timing_button_background" />
 
                     </LinearLayout>
 
                     <TextView
-                        android:text="(last feeding info)"
+                        android:text="@string/last_feeding_info_default"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -107,7 +107,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true" />
 
-                    <Switch
+                    <android.support.v7.widget.SwitchCompat
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/alarm_switch"
