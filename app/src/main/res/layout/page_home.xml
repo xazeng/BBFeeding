@@ -121,15 +121,18 @@
                     android:paddingLeft="24dp"
                     android:showDividers="middle"
                     android:divider="@drawable/divider_gray_1px_h"
-                    android:dividerPadding="10dp">
+                    android:dividerPadding="10dp"
+                    android:id="@+id/alarm_setting_panel">
 
                     <LinearLayout
+                        android:background="?attr/selectableItemBackground"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:paddingTop="3dp"
                         android:paddingBottom="5dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:id="@+id/alarm_interval_panel">
 
                         <TextView
                         android:text="@string/alarm_interval_label"
@@ -143,12 +146,14 @@
                         android:id="@+id/alarm_interval_textview" />
                     </LinearLayout>
                     <LinearLayout
+                        android:background="?attr/selectableItemBackground"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:paddingTop="3dp"
                         android:paddingBottom="5dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:id="@+id/alarm_type_panel">
 
                         <TextView
                             android:text="@string/alarm_type_label"
@@ -162,12 +167,14 @@
                             android:textSize="10sp" />
                     </LinearLayout>
                     <LinearLayout
+                        android:background="?attr/selectableItemBackground"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:paddingTop="3dp"
                         android:paddingBottom="5dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:id="@+id/alarm_ringtone_panel">
 
                         <TextView
                             android:text="@string/alarm_ringtone_label"

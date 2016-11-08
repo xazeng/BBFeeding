@@ -1,15 +1,19 @@
 package com.zeng.bbfeeding;
 
 
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.util.Calendar;
 
@@ -24,6 +28,9 @@ public class HomePage extends Page implements View.OnClickListener{
     private Button mFeedButton;
     private TextView mLastFeedingInfoTextView;
 
+    private SwitchCompat mAlarmSwitch;
+    private View mAlarmSettingPanel;
+
     @Override
     protected void onCreatePage(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.page_home);
@@ -33,7 +40,11 @@ public class HomePage extends Page implements View.OnClickListener{
         mFeedButton = (Button)findViewById(R.id.feed_button);
         mLastFeedingInfoTextView = (TextView)findViewById(R.id.last_feeding_info_textview);
 
+        mAlarmSwitch = (SwitchCompat) findViewById(R.id.alarm_switch);
+        mAlarmSettingPanel = findViewById(R.id.alarm_setting_panel);
+
         initTimingPanel();
+        initAlarmPanel();
         return;
     }
 
@@ -71,6 +82,80 @@ public class HomePage extends Page implements View.OnClickListener{
 
         updateLastFeedingInfo();
         return;
+    }
+
+    private void initAlarmPanel(){
+        initAlarmSwitch();
+        initAlarmInterval();
+    }
+
+    private void initAlarmSwitch(){
+        final boolean enabled = Data.getInstance().getAlarmEnabled();
+        Utils.enumView(mAlarmSettingPanel, new Utils.EnumViewListener() {
+            @Override
+            public void onEnum(View view) {
+                view.setEnabled(enabled);
+            }
+        });
+        mAlarmSwitch.setChecked(enabled);
+        mAlarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                final boolean enabled = b;
+                Data.getInstance().setAlarmEnabled(enabled);
+                Utils.enumView(mAlarmSettingPanel, new Utils.EnumViewListener() {
+                    @Override
+                    public void onEnum(View view) {
+                        view.setEnabled(enabled);
+                    }
+                });
+                if (enabled) { startAlarm();}
+                else {cancelAlarm();}
+            }
+        });
+        return;
+    }
+
+    private void initAlarmInterval(){
+
+        final TextView intervalTextView = (TextView)findViewById(R.id.alarm_interval_textview);
+        final View intervalPanel = findViewById(R.id.alarm_interval_panel);
+
+        int interval = Data.getInstance().getAlarmInterval();
+        intervalTextView.setText(String.format(getContext().getString(R.string.alarm_interval_format),
+                interval/60, interval%60));
+
+        intervalPanel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int interval = Data.getInstance().getAlarmInterval();
+                IntervalPickerDialog dlg = new IntervalPickerDialog();
+                dlg.init(new IntervalPickerDialog.OnSetListener() {
+                    @Override
+                    public void onSet(int hour, int minute) {
+                        Data.getInstance().setAlarmInterval(hour*60+minute);
+                        intervalTextView.setText(String.format(getContext().getString(R.string.alarm_interval_format),
+                                hour, minute));
+                        updateAlarm();
+                    }
+                }, interval/60, interval%60);
+                dlg.show(getFragmentManager(), "...");
+            }
+        });
+        return;
+    }
+
+    private void startAlarm(){
+
+    }
+
+    private void cancelAlarm(){
+
+    }
+
+    private void updateAlarm(){
+        cancelAlarm();
+        startAlarm();
     }
 
     private void updateLastFeedingInfo(){

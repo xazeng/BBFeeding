@@ -1,14 +1,8 @@
 package com.zeng.bbfeeding;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatDialogFragment;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.util.Calendar;
@@ -17,27 +11,7 @@ import java.util.Calendar;
  * Created by xianganzeng on 2016/11/2.
  */
 
-public class FeedDialog extends AppCompatDialogFragment implements DialogInterface.OnClickListener{
-    private DialogInterface.OnClickListener mPositiveListener;
-    public void setPositiveListener(DialogInterface.OnClickListener positiveListener){
-        mPositiveListener = positiveListener;
-    }
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View view = inflater.inflate(R.layout.dialog_feed, null, false);
-        initView(view);
-        builder.setView(view);
-
-        builder.setNegativeButton(android.R.string.cancel, null);
-        builder.setPositiveButton(android.R.string.ok, this);
-
-        return builder.create();
-    }
-
+public class FeedDialog extends AlertDlg implements DialogInterface.OnClickListener{
     private RadioGroup mPatternRadioGroup;
     private View mBreastPanel;
     private View mFormulaPanel;
@@ -45,13 +19,23 @@ public class FeedDialog extends AppCompatDialogFragment implements DialogInterfa
     private RadioGroup mBreastRadioGroup;
     private EditText mBreastIntervalEditText;
     private EditText mFormulaIntakeEditText;
-    private void initView(View view){
-        mPatternRadioGroup = (RadioGroup)view.findViewById(R.id.pattern_radiogroup);
-        mBreastPanel = view.findViewById(R.id.breast_panel);
-        mFormulaPanel = view.findViewById(R.id.formula_panel);
-        mBreastRadioGroup = (RadioGroup)view.findViewById(R.id.breast_radiogroup);
-        mBreastIntervalEditText = (EditText)view.findViewById(R.id.breast_interval_edittext);
-        mFormulaIntakeEditText = (EditText)view.findViewById(R.id.formula_intake_edittext);
+
+    private DialogInterface.OnClickListener mPositiveListener;
+    public void setPositiveListener(DialogInterface.OnClickListener positiveListener){
+        mPositiveListener = positiveListener;
+    }
+
+    @Override
+    protected void onCreateAlertDlg() {
+        super.onCreateAlertDlg();
+        setContentView(R.layout.dialog_feed);
+
+        mPatternRadioGroup = (RadioGroup)findViewById(R.id.pattern_radiogroup);
+        mBreastPanel = findViewById(R.id.breast_panel);
+        mFormulaPanel = findViewById(R.id.formula_panel);
+        mBreastRadioGroup = (RadioGroup)findViewById(R.id.breast_radiogroup);
+        mBreastIntervalEditText = (EditText)findViewById(R.id.breast_interval_edittext);
+        mFormulaIntakeEditText = (EditText)findViewById(R.id.formula_intake_edittext);
 
         mPatternRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -66,6 +50,10 @@ public class FeedDialog extends AppCompatDialogFragment implements DialogInterfa
             }
         });
 
+        getBuilder().setNegativeButton(android.R.string.cancel, null);
+        getBuilder().setPositiveButton(android.R.string.ok, this);
+
+        setCanceledOnTouchOutside(false);
         setupDefault();
         return;
     }

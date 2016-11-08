@@ -28,4 +28,7 @@
     <string name="right">右</string>
     <string name="last_formula_feeding_info_format">上次: %1$02d:%2$02d, 奶粉, %3$s(毫升)。</string>
     <string name="last_feeding_info_default">上次喂奶信息：。。。</string>
+    <string name="alarm_interval_format">%1$02d小时 %2$02d分钟</string>
+    <string name="unit_hour">小时</string>
+    <string name="unit_minute">分钟</string>
 </resources>

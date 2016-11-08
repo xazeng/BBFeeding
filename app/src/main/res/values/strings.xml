@@ -27,4 +27,7 @@
     <string name="right">right</string>
     <string name="last_formula_feeding_info_format">Last Feeding: %1$02d:%2$02, formula, %3$s(ml).</string>
     <string name="last_feeding_info_default">Last Feeding Information: ...</string>
+    <string name="alarm_interval_format">%1$02dh %2$02dmin</string>
+    <string name="unit_hour">hour</string>
+    <string name="unit_minute">minute</string>
 </resources>

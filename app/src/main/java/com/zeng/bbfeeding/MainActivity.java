@@ -133,8 +133,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Data.getInstance().save();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
-        Data.getInstance().save();
     }
 }
