@@ -30,4 +30,8 @@
     <string name="alarm_interval_format">%1$02dh %2$02dmin</string>
     <string name="unit_hour">hour</string>
     <string name="unit_minute">minute</string>
+    <string name="alarm_type_ring">Ring</string>
+    <string name="alarm_type_vibra">Vibra</string>
+    <string name="alarm_type_both">ring and vibra</string>
+    <string name="slide_right_to_close_label">Slide to feed baby</string>
 </resources>

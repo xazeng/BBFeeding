@@ -31,4 +31,8 @@
     <string name="alarm_interval_format">%1$02d小时 %2$02d分钟</string>
     <string name="unit_hour">小时</string>
     <string name="unit_minute">分钟</string>
+    <string name="alarm_type_both">铃声和震动</string>
+    <string name="alarm_type_ring">铃声</string>
+    <string name="alarm_type_vibra">震动</string>
+    <string name="slide_right_to_close_label">向右滑动</string>
 </resources>

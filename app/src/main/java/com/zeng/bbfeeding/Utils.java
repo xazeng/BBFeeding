@@ -12,13 +12,12 @@ public class Utils {
         public void onEnum(View view);
     }
     public static void enumView(View view, EnumViewListener listener) {
+        listener.onEnum(view);
         if (view instanceof ViewGroup) {
             for (int i=0; i<((ViewGroup) view).getChildCount(); ++i) {
                 enumView(((ViewGroup) view).getChildAt(i), listener);
             }
         }
-        else{
-            listener.onEnum(view);
-        }
+        return;
     }
 }

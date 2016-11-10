@@ -1,8 +1,15 @@
 package com.zeng.bbfeeding;
 
 
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -12,8 +19,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -28,9 +37,6 @@ public class HomePage extends Page implements View.OnClickListener{
     private Button mFeedButton;
     private TextView mLastFeedingInfoTextView;
 
-    private SwitchCompat mAlarmSwitch;
-    private View mAlarmSettingPanel;
-
     @Override
     protected void onCreatePage(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.page_home);
@@ -39,9 +45,6 @@ public class HomePage extends Page implements View.OnClickListener{
         mTimer = (Chronometer)findViewById(R.id.feed_timer);
         mFeedButton = (Button)findViewById(R.id.feed_button);
         mLastFeedingInfoTextView = (TextView)findViewById(R.id.last_feeding_info_textview);
-
-        mAlarmSwitch = (SwitchCompat) findViewById(R.id.alarm_switch);
-        mAlarmSettingPanel = findViewById(R.id.alarm_setting_panel);
 
         initTimingPanel();
         initAlarmPanel();
@@ -87,23 +90,29 @@ public class HomePage extends Page implements View.OnClickListener{
     private void initAlarmPanel(){
         initAlarmSwitch();
         initAlarmInterval();
+        initAlarmType();
+        initAlarmRingtone();
+        initAlarmVolume();
     }
 
     private void initAlarmSwitch(){
+        final SwitchCompat alarmSwitch = (SwitchCompat) findViewById(R.id.alarm_switch);
+        final View alarmSettingPanel = findViewById(R.id.alarm_setting_panel);
+
         final boolean enabled = Data.getInstance().getAlarmEnabled();
-        Utils.enumView(mAlarmSettingPanel, new Utils.EnumViewListener() {
+        Utils.enumView(alarmSettingPanel, new Utils.EnumViewListener() {
             @Override
             public void onEnum(View view) {
                 view.setEnabled(enabled);
             }
         });
-        mAlarmSwitch.setChecked(enabled);
-        mAlarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        alarmSwitch.setChecked(enabled);
+        alarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 final boolean enabled = b;
                 Data.getInstance().setAlarmEnabled(enabled);
-                Utils.enumView(mAlarmSettingPanel, new Utils.EnumViewListener() {
+                Utils.enumView(alarmSettingPanel, new Utils.EnumViewListener() {
                     @Override
                     public void onEnum(View view) {
                         view.setEnabled(enabled);
@@ -133,10 +142,12 @@ public class HomePage extends Page implements View.OnClickListener{
                 dlg.init(new IntervalPickerDialog.OnSetListener() {
                     @Override
                     public void onSet(int hour, int minute) {
-                        Data.getInstance().setAlarmInterval(hour*60+minute);
-                        intervalTextView.setText(String.format(getContext().getString(R.string.alarm_interval_format),
-                                hour, minute));
-                        updateAlarm();
+                        if (!(hour == 0 && minute == 0)) {
+                            Data.getInstance().setAlarmInterval(hour*60+minute);
+                            intervalTextView.setText(String.format(getContext().getString(R.string.alarm_interval_format),
+                                    hour, minute));
+                            restartAlarm();
+                        }
                     }
                 }, interval/60, interval%60);
                 dlg.show(getFragmentManager(), "...");
@@ -145,15 +156,123 @@ public class HomePage extends Page implements View.OnClickListener{
         return;
     }
 
-    private void startAlarm(){
+    private void initAlarmType(){
+        final TextView typeTextView = (TextView)findViewById(R.id.alarm_type_textview);
+        final View typePanel = findViewById(R.id.alarm_type_panel);
 
+        String alarmType = Data.getInstance().getAlarmType();
+        int textResId = R.string.alarm_type_both;
+        if (alarmType.equals("ring")) textResId = R.string.alarm_type_ring;
+        else if (alarmType.equals("vibra")) textResId = R.string.alarm_type_vibra;
+        typeTextView.setText(textResId);
+
+        typePanel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String alarmType = Data.getInstance().getAlarmType();
+                int checkedIdx = 0;
+                if (alarmType.equals("vibra")) {checkedIdx = 1;}
+                else if (alarmType.equals("both")) {checkedIdx = 2;}
+                new AlertDialog.Builder(getContext())
+                        .setSingleChoiceItems(new String[]{
+                                getString(R.string.alarm_type_ring),
+                                getString(R.string.alarm_type_vibra),
+                                getString(R.string.alarm_type_both)
+                        }, checkedIdx, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String alarmType = "both";
+                                int textResId = R.string.alarm_type_both;
+                                if (which == 0) {alarmType = "ring"; textResId = R.string.alarm_type_ring;}
+                                else if (which == 1) {alarmType = "vibra"; textResId = R.string.alarm_type_vibra;}
+                                Data.getInstance().setAlarmType(alarmType);
+                                typeTextView.setText(textResId);
+
+                                dialog.dismiss();
+                            }
+                        }).setNegativeButton(android.R.string.cancel, null)
+                        .show();
+            }
+        });
+    }
+
+    private void initAlarmRingtone(){
+        final TextView ringtoneTextView = (TextView)findViewById(R.id.alarm_ringtone_textview);
+        final View ringtonePanel = findViewById(R.id.alarm_ringtone_panel);
+
+        ringtoneTextView.setText(RingtoneManager.getRingtone(getContext(), Data.getInstance().getAlarmRingtone()).getTitle(getContext()));
+
+        ringtonePanel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
+                        Data.getInstance().getAlarmRingtone());
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK){
+            Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+            if (uri != null) {
+                Data.getInstance().setAlarmRingtone(uri);
+                final TextView ringtoneTextView = (TextView)findViewById(R.id.alarm_ringtone_textview);
+                ringtoneTextView.setText(RingtoneManager.getRingtone(getContext(), uri).getTitle(getContext()));
+            }
+        }
+        return;
+    }
+
+    private void initAlarmVolume(){
+        final SeekBar volumeBar = (SeekBar)findViewById(R.id.alarm_volumn_seekbar);
+
+        volumeBar.setProgress(Data.getInstance().getAlarmVolume());
+        volumeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) { }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Data.getInstance().setAlarmVolume(volumeBar.getProgress());
+            }
+        });
+    }
+
+    private void startAlarm(){
+        if (Data.getInstance().getAlarmEnabled()) {
+            long past = Calendar.getInstance().getTimeInMillis() - Data.getInstance().getFeedingBaseTime();
+            long interval = Data.getInstance().getAlarmInterval() * 60 * 1000;
+            if (past < interval) {
+                Intent intent = new Intent(getContext(), AlarmActivity.class);
+                intent.setAction(Intent.ACTION_MAIN);
+                intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                PendingIntent pi = PendingIntent.getActivity(getContext(), 0, intent, 0);
+                AlarmManager alarmManager = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
+                // alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + (interval - past), pi);
+                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 10000, pi);
+                Toast.makeText(getContext(), "start alarm", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void cancelAlarm(){
-
+        Intent intent = new Intent(getContext(), AlarmActivity.class);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        PendingIntent pi = PendingIntent.getActivity(getContext(), 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pi);
     }
 
-    private void updateAlarm(){
+    private void restartAlarm(){
         cancelAlarm();
         startAlarm();
     }
@@ -205,6 +324,8 @@ public class HomePage extends Page implements View.OnClickListener{
         Data.getInstance().setFeedingBaseTime(now);
         mTimer.setBase(SystemClock.elapsedRealtime());
         mTimer.start();;
+
+        startAlarm();
     }
 
     private void onClickResetTimingTextView(){
@@ -220,6 +341,8 @@ public class HomePage extends Page implements View.OnClickListener{
                         Data.getInstance().setFeedingBaseTime(0);
                         mTimer.stop();
                         mTimer.setBase(SystemClock.elapsedRealtime());
+
+                        cancelAlarm();
                     }
                 })
                 .show();
@@ -238,7 +361,9 @@ public class HomePage extends Page implements View.OnClickListener{
                 long now = Calendar.getInstance().getTimeInMillis();
                 Data.getInstance().setFeedingBaseTime(now);
                 mTimer.setBase(SystemClock.elapsedRealtime());
-                mTimer.start();;
+                mTimer.start();
+
+                restartAlarm();
 
                 updateLastFeedingInfo();
                 return;

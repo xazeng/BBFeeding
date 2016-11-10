@@ -21,17 +21,19 @@ public class Data {
     private SharedPreferences.Editor mEditor;
     private static final String PREF_NAME = "data";
     public void init(Context context) {
-        SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        mFeedingBaseTime = pref.getLong(FEEDING_BASE_TIME, 0L);
-        mLastFeedingInfo = pref.getString(LAST_FEEDING_INFO, "");
+        if (mEditor == null) {
+            SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+            mFeedingBaseTime = pref.getLong(FEEDING_BASE_TIME, 0L);
+            mLastFeedingInfo = pref.getString(LAST_FEEDING_INFO, "");
 
-        mAlarmEnabled = pref.getBoolean(ALARM_ENABLED, false);
-        mAlarmInterval = pref.getInt(ALARM_INTERVAL, 2*60);
-        mAlarmType = pref.getString(ALARM_TYPE, "both");
-        mAlarmRingtone = Uri.parse(pref.getString(ALARM_RINGTONE, Settings.System.DEFAULT_ALARM_ALERT_URI.toString()));
-        mAlarmVolume = pref.getInt(ALARM_VOLUME, 100);
+            mAlarmEnabled = pref.getBoolean(ALARM_ENABLED, false);
+            mAlarmInterval = pref.getInt(ALARM_INTERVAL, 2*60);
+            mAlarmType = pref.getString(ALARM_TYPE, "both");
+            mAlarmRingtone = Uri.parse(pref.getString(ALARM_RINGTONE, Settings.System.DEFAULT_ALARM_ALERT_URI.toString()));
+            mAlarmVolume = pref.getInt(ALARM_VOLUME, 100);
 
-        mEditor = pref.edit();
+            mEditor = pref.edit();
+        }
         return;
     }
 
@@ -70,7 +72,7 @@ public class Data {
     public int getAlarmInterval() {return mAlarmInterval;}
     public void setAlarmInterval(int interval){
         mAlarmInterval = interval;
-        mEditor.putLong(ALARM_INTERVAL, mAlarmInterval);
+        mEditor.putInt(ALARM_INTERVAL, mAlarmInterval);
     }
 
     private static final String ALARM_TYPE = "alarm_type";

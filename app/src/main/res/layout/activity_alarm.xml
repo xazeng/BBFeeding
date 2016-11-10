@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/alarm_content"
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitStart" />
+
+    <com.kaku.sldv.SlideUnlockView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/slide_to_close_view"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:text="@string/slide_right_to_close_label"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/anim_sliding_tip"
+            android:gravity="center_vertical"
+            android:id="@+id/slide_textview" />
+    </com.kaku.sldv.SlideUnlockView>
+</RelativeLayout>

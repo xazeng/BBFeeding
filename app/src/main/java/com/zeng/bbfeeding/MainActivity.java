@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Data.getInstance().init(this);
 
         mToolBar = (Toolbar)findViewById(R.id.tool_bar);
         mViewPager = (ViewPager)findViewById(R.id.view_pager);
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         initViewPager();
         initBottomBar();
 
-        Data.getInstance().init(this);
         return;
     }
 
