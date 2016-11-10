@@ -41,7 +41,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:id="@+id/feed_button"/>
+                    android:id="@+id/feed_button"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:background="@drawable/feed_button_background"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:layout_marginBottom="8dp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -60,7 +66,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/reset_timing_textview"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@drawable/operate_timing_button_textcolor"
                             android:background="@drawable/operate_timing_button_background"/>
                         <TextView
                             android:padding="3dp"
@@ -68,7 +74,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/start_timing_textview"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@drawable/operate_timing_button_textcolor"
                             android:background="@drawable/operate_timing_button_background" />
 
                     </LinearLayout>

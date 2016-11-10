@@ -51,8 +51,8 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
 
         if (mMediaPlayer != null) {
             mMediaPlayer.stop();
@@ -61,6 +61,8 @@ public class AlarmActivity extends AppCompatActivity {
         if (mVibrator != null) {
             mVibrator.cancel();
         }
+
+        finish();
     }
 
     private void activeAlarm(){

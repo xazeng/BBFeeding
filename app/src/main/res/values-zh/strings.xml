@@ -12,7 +12,7 @@
     <string name="reset_timing_label">重置计时</string>
     <string name="time_passed_label">距上一次已经过了</string>
     <string name="start_timing_label">开始计时</string>
-    <string name="feed_button_label">马上喂奶</string>
+    <string name="feed_button_label">现在喂奶</string>
     <string name="reset_timing_check_dialog_content">确定要重置计时器吗？</string>
     <string name="feeding_pattern_breast">母乳</string>
     <string name="feeding_pattern_formula">奶粉</string>
@@ -22,7 +22,7 @@
     <string name="breast_interval_label">时长：</string>
     <string name="breast_side_label">哪边：</string>
     <string name="formula_intake_edittext_hint">（毫升）</string>
-    <string name="formula_intake_label">奶量</string>
+    <string name="formula_intake_label">奶量：</string>
     <string name="last_breast_feeding_info_format">上次: %1$02d:%2$02d, 母乳(%3$s), %4$s(分钟)。</string>
     <string name="left">左</string>
     <string name="right">右</string>
