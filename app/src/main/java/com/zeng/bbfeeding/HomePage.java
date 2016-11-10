@@ -210,6 +210,9 @@ public class HomePage extends Page implements View.OnClickListener{
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
                         Data.getInstance().getAlarmRingtone());
+
+                // android:launchMode="singleInstance" won't work.
+                // https://developer.android.com/guide/topics/manifest/activity-element.html#lmode
                 startActivityForResult(intent, 0);
             }
         });
