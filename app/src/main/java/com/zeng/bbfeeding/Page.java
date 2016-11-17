@@ -33,7 +33,7 @@ public abstract class Page extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        // Log.e(TAG, this.getClass().getName() + ".onAttach");
+        // Log.e(TAG, this.getClass().getName() + ".onCreateView");
 
         if (mRootView == null) {
             mInflater = inflater;
@@ -46,7 +46,6 @@ public abstract class Page extends Fragment {
         }
         return mRootView;
     }
-
 
     /*
     @Override

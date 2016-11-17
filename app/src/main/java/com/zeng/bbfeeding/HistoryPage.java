@@ -19,22 +19,35 @@ import java.util.Calendar;
 public class HistoryPage extends Page{
     private RecyclerView mHistoryView;
 
+
     @Override
     protected void onCreatePage(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.page_history);
         mHistoryView = (RecyclerView)findViewById(R.id.history_recyclerview);
 
         mHistoryView.setLayoutManager(new LinearLayoutManager(getContext()));
+        Data.getInstance().mHistoryUpdated = true; // Life cycle of Date instance.
     }
 
     @Override
     protected void onShowPage() {
         super.onShowPage();
         if (Data.getInstance().mHistoryUpdated){
-            mHistoryView.setAdapter(new HistoryAdapter());
             Data.getInstance().mHistoryUpdated = false;
 
-            mHistoryView.getLayoutManager().scrollToPosition(mHistoryView.getAdapter().getItemCount() - 1);
+            HistoryAdapter adapter = new HistoryAdapter();
+            mHistoryView.setAdapter(adapter);
+
+            // scroll to latest
+            if (!adapter.mItemList.isEmpty()) {
+                int position = adapter.mItemList.size() - 1;
+                for (; position > 0; --position) {
+                    if (!adapter.mItemList.get(position).date.equals(adapter.mItemList.get(position-1).date)){
+                        break;
+                    }
+                }
+                mHistoryView.getLayoutManager().scrollToPosition(position);
+            }
         }
     }
 
@@ -44,7 +57,7 @@ public class HistoryPage extends Page{
     }
 
     private class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        private ArrayList<ItemData> mItemList = new ArrayList<ItemData>();
+        public ArrayList<ItemData> mItemList = new ArrayList<ItemData>();
         public HistoryAdapter(){
             super();
 
