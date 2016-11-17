@@ -23,14 +23,15 @@ public class Data {
     public void init(Context context) {
         if (mEditor == null) {
             SharedPreferences pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+
             mFeedingBaseTime = pref.getLong(FEEDING_BASE_TIME, 0L);
             mLastFeedingInfo = pref.getString(LAST_FEEDING_INFO, "");
-
             mAlarmEnabled = pref.getBoolean(ALARM_ENABLED, false);
             mAlarmInterval = pref.getInt(ALARM_INTERVAL, 2*60);
             mAlarmType = pref.getString(ALARM_TYPE, "both");
             mAlarmRingtone = Uri.parse(pref.getString(ALARM_RINGTONE, Settings.System.DEFAULT_ALARM_ALERT_URI.toString()));
             mAlarmVolume = pref.getInt(ALARM_VOLUME, 100);
+            mFeedingHistory = new StringBuilder(pref.getString(FEEDING_HISTORY, ""));
 
             mEditor = pref.edit();
         }
@@ -38,17 +39,28 @@ public class Data {
     }
 
     public void save(){
+        mEditor.putLong(FEEDING_BASE_TIME, mFeedingBaseTime);
+        mEditor.putString(LAST_FEEDING_INFO, mLastFeedingInfo);
+        mEditor.putBoolean(ALARM_ENABLED, mAlarmEnabled);
+        mEditor.putInt(ALARM_INTERVAL, mAlarmInterval);
+        mEditor.putString(ALARM_TYPE, mAlarmType);
+        mEditor.putString(ALARM_RINGTONE, mAlarmRingtone.toString());
+        mEditor.putInt(ALARM_VOLUME, mAlarmVolume);
+        mEditor.putString(FEEDING_HISTORY, mFeedingHistory.toString());
 
         mEditor.apply();
         return;
     }
+
+    public static final int FEEDING_PATTERN_LEFT = 1;
+    public static final int FEEDING_PATTERN_RIGHT = 2;
+    public static final int FEEDING_PATTERN_FORMULA = 3;
 
     private static final String FEEDING_BASE_TIME = "feed_base_time";
     private long mFeedingBaseTime;
     public long getFeedingBaseTime() {return mFeedingBaseTime;}
     public void setFeedingBaseTime(long t) {
         mFeedingBaseTime = t;
-        mEditor.putLong(FEEDING_BASE_TIME, mFeedingBaseTime);
     }
 
     private static final String LAST_FEEDING_INFO = "last_feeding_info";
@@ -56,7 +68,6 @@ public class Data {
     public String getLastFeedingInfo() {return mLastFeedingInfo;}
     public void setLastFeedingInfo(String info) {
         mLastFeedingInfo = info;
-        mEditor.putString(LAST_FEEDING_INFO, mLastFeedingInfo);
     }
 
     private static final String ALARM_ENABLED = "alarm_enabled";
@@ -64,7 +75,6 @@ public class Data {
     public boolean getAlarmEnabled() {return mAlarmEnabled;}
     public void setAlarmEnabled(boolean b) {
         mAlarmEnabled = b;
-        mEditor.putBoolean(ALARM_ENABLED, mAlarmEnabled);
     }
 
     private static final String ALARM_INTERVAL = "alarm_interval";
@@ -72,7 +82,6 @@ public class Data {
     public int getAlarmInterval() {return mAlarmInterval;}
     public void setAlarmInterval(int interval){
         mAlarmInterval = interval;
-        mEditor.putInt(ALARM_INTERVAL, mAlarmInterval);
     }
 
     private static final String ALARM_TYPE = "alarm_type";
@@ -80,7 +89,6 @@ public class Data {
     public String getAlarmType() {return mAlarmType;}
     public void setAlarmType(String t) {
         mAlarmType = t;
-        mEditor.putString(ALARM_TYPE, mAlarmType);
     }
 
     private static final String ALARM_RINGTONE = "alarm_ringtone";
@@ -88,7 +96,6 @@ public class Data {
     public Uri getAlarmRingtone() {return mAlarmRingtone;}
     public void setAlarmRingtone(Uri uri) {
         mAlarmRingtone = uri;
-        mEditor.putString(ALARM_RINGTONE, uri.toString());
     }
 
     private static final String ALARM_VOLUME = "alarm_volume";
@@ -96,6 +103,20 @@ public class Data {
     public int getAlarmVolume(){return mAlarmVolume;}
     public void setAlarmVolume(int vol) {
         mAlarmVolume = vol;
-        mEditor.putInt(ALARM_VOLUME, mAlarmVolume);
     }
+
+    private static final String FEEDING_HISTORY = "feeding_history";
+    private StringBuilder mFeedingHistory;
+    public String getFeedingHistory() {return mFeedingHistory.toString();}
+    public void setFeedingHistory(String history) {
+        mFeedingHistory = new StringBuilder(history);
+    }
+    public void addFeedingHistory(String history){
+        mFeedingHistory.append(history);
+        mFeedingHistory.append(",");
+        mHistoryUpdated = true;
+    }
+    public boolean mHistoryUpdated = true;
+
+
 }

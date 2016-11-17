@@ -63,14 +63,16 @@ public class FeedDialog extends AlertDlg implements DialogInterface.OnClickListe
             String infoStr = Data.getInstance().getLastFeedingInfo();
             String[] argv = infoStr.split("\\|");
 
-            if (argv[1].equals("breast")) {
+            int pattern = Integer.parseInt(argv[1]);
+            if (Integer.parseInt(argv[1]) != Data.FEEDING_PATTERN_FORMULA) {
                 mPatternRadioGroup.check(R.id.breast_radiobutton);
-                mBreastRadioGroup.check(argv[2].equals("left")?R.id.breast_right_radiobutton:R.id.breast_left_radiobutton);
+                mBreastRadioGroup.check(pattern == Data.FEEDING_PATTERN_RIGHT
+                        ? R.id.breast_right_radiobutton : R.id.breast_left_radiobutton);
             } else {
                 mPatternRadioGroup.check(R.id.formula_radiobutton);
             }
         }catch (Exception ee){
-
+            mPatternRadioGroup.check(R.id.formula_radiobutton);
         }
         return;
     }
@@ -82,10 +84,8 @@ public class FeedDialog extends AlertDlg implements DialogInterface.OnClickListe
 
         if (mPatternRadioGroup.getCheckedRadioButtonId() == R.id.breast_radiobutton) {
             builder.append("|");
-            builder.append("breast");
-
-            builder.append("|");
-            builder.append(mBreastRadioGroup.getCheckedRadioButtonId() == R.id.breast_left_radiobutton  ? "left" : "right");
+            builder.append(mBreastRadioGroup.getCheckedRadioButtonId() == R.id.breast_left_radiobutton
+                    ? Data.FEEDING_PATTERN_LEFT : Data.FEEDING_PATTERN_RIGHT);
 
             int interval = 0;
             try {
@@ -96,7 +96,7 @@ public class FeedDialog extends AlertDlg implements DialogInterface.OnClickListe
 
         } else {
             builder.append("|");
-            builder.append("formula");
+            builder.append(Data.FEEDING_PATTERN_FORMULA);
 
             int intake = 0;
             try {
@@ -107,6 +107,7 @@ public class FeedDialog extends AlertDlg implements DialogInterface.OnClickListe
         }
 
         Data.getInstance().setLastFeedingInfo(builder.toString());
+        Data.getInstance().addFeedingHistory(builder.toString());
         mPositiveListener.onClick(dialogInterface, i);
         return;
     }

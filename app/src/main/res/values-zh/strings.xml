@@ -14,8 +14,8 @@
     <string name="start_timing_label">开始计时</string>
     <string name="feed_button_label">现在喂奶</string>
     <string name="reset_timing_check_dialog_content">确定要重置计时器吗？</string>
-    <string name="feeding_pattern_breast">母乳</string>
-    <string name="feeding_pattern_formula">奶粉</string>
+    <string name="feeding_pattern_breast_label">母乳</string>
+    <string name="feeding_pattern_formula_label">奶粉</string>
     <string name="breast_left_label">左边</string>
     <string name="breast_right_label">右边</string>
     <string name="breast_interval_edittext_hint">(分钟)</string>
@@ -23,10 +23,10 @@
     <string name="breast_side_label">哪边：</string>
     <string name="formula_intake_edittext_hint">（毫升）</string>
     <string name="formula_intake_label">奶量：</string>
-    <string name="last_breast_feeding_info_format">上次: %1$02d:%2$02d, 母乳(%3$s), %4$s(分钟)。</string>
-    <string name="left">左</string>
-    <string name="right">右</string>
-    <string name="last_formula_feeding_info_format">上次: %1$02d:%2$02d, 奶粉, %3$s(毫升)。</string>
+    <string name="last_breast_feeding_info_format">上次: %1$02d:%2$02d, 母乳(%3$s), %4$s 分钟</string>
+    <string name="str_left">左</string>
+    <string name="str_right">右</string>
+    <string name="last_formula_feeding_info_format">上次: %1$02d:%2$02d, 奶粉, %3$s 毫升</string>
     <string name="last_feeding_info_default">上次喂奶信息：。。。</string>
     <string name="alarm_interval_format">%1$02d小时 %2$02d分钟</string>
     <string name="unit_hour">小时</string>
@@ -35,4 +35,11 @@
     <string name="alarm_type_ring">铃声</string>
     <string name="alarm_type_vibra">震动</string>
     <string name="slide_right_to_close_label">向右滑动</string>
+    <string name="history_item_breast_interval">%1$s 分钟</string>
+    <string name="history_item_breast_left">母乳(左)</string>
+    <string name="history_item_breast_right">母乳(右)</string>
+    <string name="history_item_date">%1$d-%2$d-%3$d</string>
+    <string name="history_item_formula">奶粉</string>
+    <string name="history_item_formula_intake">%1$s 毫升</string>
+    <string name="history_item_time">%1$02d:%2$02d</string>
 </resources>

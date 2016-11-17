@@ -13,8 +13,8 @@
     <string name="start_timing_label">Start Timing</string>
     <string name="feed_button_label">Feed Now</string>
     <string name="reset_timing_check_dialog_content">Are you sure to reset current timing?</string>
-    <string name="feeding_pattern_formula">Formula</string>
-    <string name="feeding_pattern_breast">Breast-feeding</string>
+    <string name="feeding_pattern_formula_label">Formula</string>
+    <string name="feeding_pattern_breast_label">Breast-feeding</string>
     <string name="breast_left_label">Left</string>
     <string name="breast_right_label">Right</string>
     <string name="breast_interval_edittext_hint">(minite)</string>
@@ -22,10 +22,10 @@
     <string name="breast_interval_label">Interval:</string>
     <string name="formula_intake_edittext_hint">(ml)</string>
     <string name="formula_intake_label">Intake:</string>
-    <string name="last_breast_feeding_info_format">Last Feeding: %1$02d:%2$02d, breast(%3$s), %4$s(min).</string>
-    <string name="left">left</string>
-    <string name="right">right</string>
-    <string name="last_formula_feeding_info_format">Last Feeding: %1$02d:%2$02, formula, %3$s(ml).</string>
+    <string name="last_breast_feeding_info_format">Last Feeding: %1$02d:%2$02d, breast(%3$s), %4$s min</string>
+    <string name="str_left">left</string>
+    <string name="str_right">right</string>
+    <string name="last_formula_feeding_info_format">Last Feeding: %1$02d:%2$02, formula, %3$s ml</string>
     <string name="last_feeding_info_default">Last Feeding Information: ...</string>
     <string name="alarm_interval_format">%1$02dh %2$02dmin</string>
     <string name="unit_hour">hour</string>
@@ -34,4 +34,11 @@
     <string name="alarm_type_vibra">Vibra</string>
     <string name="alarm_type_both">ring and vibra</string>
     <string name="slide_right_to_close_label">Slide to feed baby</string>
+    <string name="history_item_breast_left">breast(left)</string>
+    <string name="history_item_breast_right">breast(right)</string>
+    <string name="history_item_formula">formula</string>
+    <string name="history_item_breast_interval">%1$s min</string>
+    <string name="history_item_formula_intake">%1$s ml</string>
+    <string name="history_item_time">%1$02d:%2$02d</string>
+    <string name="history_item_date">%1$d-%2$d-%3$d</string>
 </resources>

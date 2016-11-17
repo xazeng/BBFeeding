@@ -21,7 +21,8 @@ import com.roughike.bottombar.OnTabSelectListener;
 public class MainActivity extends AppCompatActivity {
 
     private int mPagePosition;
-    private Fragment[] mPages;
+    private int mPrePagePosition;
+    private Page[] mPages;
     private int[] mTabIds;
 
     private ViewPager mViewPager;
@@ -39,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         mBottomBar = (BottomBar)findViewById(R.id.bottom_bar);
 
         mPagePosition = 0;
-        mPages = new Fragment[]{
+        mPrePagePosition = 0;
+        mPages = new Page[]{
                 new HomePage(),
                 new HistoryPage(),
                 new LikePage(),
@@ -106,6 +108,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                if (position != mPrePagePosition) {
+                    mPages[mPrePagePosition].onHidePage();
+                    mPages[position].onShowPage();
+                    mPrePagePosition = position;
+                }
 
                 if (position != mPagePosition){
                     mPagePosition = position;

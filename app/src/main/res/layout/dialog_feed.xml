@@ -21,7 +21,7 @@
             android:background="@drawable/feeding_pattern_button_background"
             android:textColor="@drawable/feeding_pattern_button_textcolor"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/feeding_pattern_breast"/>
+            android:text="@string/feeding_pattern_breast_label"/>
 
         <RadioButton
             android:id="@+id/formula_radiobutton"
@@ -33,7 +33,7 @@
             android:background="@drawable/feeding_pattern_button_background"
             android:textColor="@drawable/feeding_pattern_button_textcolor"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/feeding_pattern_formula"/>
+            android:text="@string/feeding_pattern_formula_label"/>
 
     </RadioGroup>
 

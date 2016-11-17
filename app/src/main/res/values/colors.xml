@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#ff7193</color>
     <color name="colorAccent">#34d69d</color>
     <color name="colorAccentDark">#11a16e</color>
+    <color name="colorHistoryItemDark">#efeeee</color>
+    <color name="colorHistoryItemLight">#ffffff</color>
 </resources>

@@ -4,7 +4,6 @@ package com.zeng.bbfeeding;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,7 +20,6 @@ import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -259,9 +257,11 @@ public class HomePage extends Page implements View.OnClickListener{
                 intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 PendingIntent pi = PendingIntent.getActivity(getContext(), 0, intent, 0);
                 AlarmManager alarmManager = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
-                // alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + (interval - past), pi);
-                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 10000, pi);
-                Toast.makeText(getContext(), "start alarm", Toast.LENGTH_SHORT).show();
+                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + (interval - past), pi);
+
+                // for debug
+                // alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 10000, pi);
+                // Toast.makeText(getContext(), "start alarm", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -289,10 +289,11 @@ public class HomePage extends Page implements View.OnClickListener{
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(Long.parseLong(argv[0]));
 
-            if (argv[1].equals("breast")) {
+            int pattern = Integer.parseInt(argv[1]);
+            if (pattern != Data.FEEDING_PATTERN_FORMULA) {
                 mLastFeedingInfoTextView.setText(String.format(getString(R.string.last_breast_feeding_info_format),
                         time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE),
-                        argv[2].equals("left") ? getString(R.string.left) : getString(R.string.right), argv[3].equals("0") ? "-" : argv[3]));
+                        pattern == Data.FEEDING_PATTERN_LEFT ? getString(R.string.str_left) : getString(R.string.str_right), argv[2].equals("0") ? "-" : argv[2]));
             } else {
                 mLastFeedingInfoTextView.setText(String.format(getString(R.string.last_formula_feeding_info_format),
                         time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE),
@@ -369,6 +370,7 @@ public class HomePage extends Page implements View.OnClickListener{
                 restartAlarm();
 
                 updateLastFeedingInfo();
+                Data.getInstance().save();
                 return;
             }
         });
