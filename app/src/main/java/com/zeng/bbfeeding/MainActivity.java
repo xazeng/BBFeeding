@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.MobileAds;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Data.getInstance().init(this);
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-6858874865593788~1172352152");
 
         mToolBar = (Toolbar)findViewById(R.id.tool_bar);
         mViewPager = (ViewPager)findViewById(R.id.view_pager);

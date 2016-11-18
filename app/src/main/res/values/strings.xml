@@ -41,4 +41,6 @@
     <string name="history_item_formula_intake">%1$s ml</string>
     <string name="history_item_time">%1$02d:%2$02d</string>
     <string name="history_item_date">%1$d-%2$d-%3$d</string>
+    <string name="ad_native_en_us_id">ca-app-pub-6858874865593788/7997614958</string>
+    <string name="ad_banner_en_us_id">ca-app-pub-6858874865593788/2722380155</string>
 </resources>

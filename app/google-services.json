@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "713335162367",
+    "firebase_url": "https://bbfeeding.firebaseio.com",
+    "project_id": "bbfeeding",
+    "storage_bucket": "bbfeeding.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713335162367:android:e8a84343644d0a48",
+        "android_client_info": {
+          "package_name": "com.zeng.bbfeeding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713335162367-tkvemoccb4dbdu3fo135n9hcnjt3ucte.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMZ9ZMl8JX1oFQTC3_X_NE1wCEJ0kD8pg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
