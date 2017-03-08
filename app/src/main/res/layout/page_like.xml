@@ -21,4 +21,10 @@
         ads:adUnitId="@string/ad_native_en_us_id"
         ads:adSize="320x150">
     </com.google.android.gms.ads.NativeExpressAdView>
+
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/share_test_button" />
 </LinearLayout>

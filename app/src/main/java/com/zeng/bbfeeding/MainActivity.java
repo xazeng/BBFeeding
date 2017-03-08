@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private BottomBar mBottomBar;
-    private Toolbar mToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         Data.getInstance().init(this);
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-6858874865593788~1172352152");
 
-        mToolBar = (Toolbar)findViewById(R.id.tool_bar);
         mViewPager = (ViewPager)findViewById(R.id.view_pager);
         mBottomBar = (BottomBar)findViewById(R.id.bottom_bar);
 
