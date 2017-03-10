@@ -19,9 +19,13 @@ import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by xianganzeng on 2016/10/27.
@@ -45,7 +49,27 @@ public class HomePage extends Page implements View.OnClickListener{
 
         initTimingPanel();
         initAlarmPanel();
+        initAd();
         return;
+    }
+
+    private void initAd(){
+        final AdView bannerAd = (AdView)findViewById(R.id.banner_ad_view);
+        AdRequest bannerRequest = new AdRequest.Builder()
+                .setGender(AdRequest.GENDER_FEMALE)
+                .addKeyword("baby").addKeyword("mother")
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        bannerAd.loadAd(bannerRequest);
+        bannerAd.setVisibility(View.GONE);
+        bannerAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                bannerAd.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void initTimingPanel(){

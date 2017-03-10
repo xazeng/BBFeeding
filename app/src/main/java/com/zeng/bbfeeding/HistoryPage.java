@@ -12,21 +12,52 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.NativeExpressAdView;
+
 /**
  * Created by xianganzeng on 2016/10/27.
  */
 
 public class HistoryPage extends Page{
     private RecyclerView mHistoryView;
+    private TextView mNoHistoryTextView;
 
 
     @Override
     protected void onCreatePage(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.page_history);
         mHistoryView = (RecyclerView)findViewById(R.id.history_recyclerview);
+        mNoHistoryTextView = (TextView)findViewById(R.id.no_history_textview);
 
         mHistoryView.setLayoutManager(new LinearLayoutManager(getContext()));
         Data.getInstance().mHistoryUpdated = true; // Life cycle of Date instance.
+
+        mHistoryView.setVisibility(View.VISIBLE);
+        mNoHistoryTextView.setVisibility(View.GONE);
+
+        initAd();
+    }
+
+    private void initAd(){
+        final NativeExpressAdView nativeAd = (NativeExpressAdView)findViewById(R.id.native_ad_view);
+
+        AdRequest nativeRequest = new AdRequest.Builder()
+                .setGender(AdRequest.GENDER_FEMALE)
+                .addKeyword("baby").addKeyword("mother")
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+        nativeAd.loadAd(nativeRequest);
+        nativeAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                nativeAd.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -40,6 +71,8 @@ public class HistoryPage extends Page{
 
             // scroll to latest
             if (!adapter.mItemList.isEmpty()) {
+                mHistoryView.setVisibility(View.VISIBLE);
+                mNoHistoryTextView.setVisibility(View.GONE);
                 int position = adapter.mItemList.size() - 1;
                 for (; position > 0; --position) {
                     if (!adapter.mItemList.get(position).date.equals(adapter.mItemList.get(position-1).date)){
@@ -47,6 +80,9 @@ public class HistoryPage extends Page{
                     }
                 }
                 mHistoryView.getLayoutManager().scrollToPosition(position);
+            } else {
+                mHistoryView.setVisibility(View.GONE);
+                mNoHistoryTextView.setVisibility(View.VISIBLE);
             }
         }
     }

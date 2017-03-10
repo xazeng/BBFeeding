@@ -72,7 +72,7 @@ public class FeedDialog extends AlertDlg implements DialogInterface.OnClickListe
                 mPatternRadioGroup.check(R.id.formula_radiobutton);
             }
         }catch (Exception ee){
-            mPatternRadioGroup.check(R.id.formula_radiobutton);
+            mPatternRadioGroup.check(R.id.breast_radiobutton);
         }
         return;
     }

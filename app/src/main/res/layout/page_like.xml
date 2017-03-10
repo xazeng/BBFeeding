@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:padding="10dp">
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/banner_ad_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/ad_banner_en_us_id">
-    </com.google.android.gms.ads.AdView>
-
-    <com.google.android.gms.ads.NativeExpressAdView
-        android:id="@+id/native_ad_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        ads:adUnitId="@string/ad_native_en_us_id"
-        ads:adSize="320x150">
-    </com.google.android.gms.ads.NativeExpressAdView>
-
-    <Button
-        android:text="Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/share_test_button" />
 </LinearLayout>

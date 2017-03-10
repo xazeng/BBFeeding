@@ -1,6 +1,7 @@
 package com.zeng.bbfeeding;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -89,6 +90,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initToolBar(){
+        findViewById(R.id.share_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent share = new Intent(android.content.Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, getString(R.string.apk_install_url));
+                share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(Intent.createChooser(share, getString(R.string.share_title)));
+            }
+        });
+
+        findViewById(R.id.star_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void initViewPager(){

@@ -42,4 +42,6 @@
     <string name="history_item_formula">奶粉</string>
     <string name="history_item_formula_intake">%1$s 毫升</string>
     <string name="history_item_time">%1$02d:%2$02d</string>
+    <string name="no_history_label">没有历史记录</string>
+    <string name="share_title">分享给你的朋友们</string>
 </resources>
