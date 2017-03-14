@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent share = new Intent(android.content.Intent.ACTION_SEND);
                 share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_TEXT, getString(R.string.apk_install_url));
-                share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(Intent.createChooser(share, getString(R.string.share_title)));
             }
         });

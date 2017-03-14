@@ -9,7 +9,9 @@ import android.os.PowerManager;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,13 +24,21 @@ public class AlarmActivity extends AppCompatActivity {
 
     MediaPlayer mMediaPlayer;
     Vibrator mVibrator;
+    boolean mActive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         setContentView(R.layout.activity_alarm);
+
         Data.getInstance().init(this);
 
         TextView slideTextView = (TextView)findViewById(R.id.slide_textview);
@@ -45,24 +55,55 @@ public class AlarmActivity extends AppCompatActivity {
             }
         });
 
-        activeAlarm();
         wakeupDevice();
+        activeAlarm();
         return;
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        // Log.e("##########", "onWindowFocusChanged " + (hasFocus?"true":"false"));
+        mActive = true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Log.e("##########", "onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Log.e("##########", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        // Log.e("##########", "onPause");
 
-        if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
+        if (mActive) {
+            cleanUp();
         }
+    }
 
-        if (mVibrator != null) {
-            mVibrator.cancel();
-        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Log.e("##########", "onStop");
+    }
 
-        finish();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Log.e("##########", "onDestory");
+    }
+
+    private void cleanUp() {
+        if (mMediaPlayer != null) { mMediaPlayer.stop(); }
+        if (mVibrator != null) { mVibrator.cancel(); }
     }
 
     private void activeAlarm(){
@@ -88,12 +129,17 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void wakeupDevice(){
+        // wake up device
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock fullWakeLock = powerManager.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "FULL WAKE LOCK");
-        fullWakeLock.acquire();
+        PowerManager.WakeLock wakeLock = powerManager.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "BBFeedingAlarm");
+        if (!wakeLock.isHeld()) {
+            wakeLock.acquire();
+            wakeLock.release();
+        }
 
+        // disable keyguard
         KeyguardManager keyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
-        KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("TAG");
+        KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("BBFeedingAlarm");
         keyguardLock.disableKeyguard();
     }
 }
