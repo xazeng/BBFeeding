@@ -281,9 +281,8 @@ public class HomePage extends Page implements View.OnClickListener{
                 intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 PendingIntent pi = PendingIntent.getActivity(getContext(), 0, intent, 0);
                 AlarmManager alarmManager = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
-                // alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + (interval - past), pi);
-                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 10000, pi);
-                Toast.makeText(getContext(), "start alarm", Toast.LENGTH_SHORT).show();
+                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + (interval - past), pi);
+                // alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 10000, pi); Toast.makeText(getContext(), "start alarm", Toast.LENGTH_SHORT).show();
             }
         }
     }

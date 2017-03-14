@@ -50,6 +50,8 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onSlidFinish() {
                 Intent intent = new Intent(AlarmActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             }
