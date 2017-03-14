@@ -38,19 +38,21 @@ public class HistoryPage extends Page{
         mHistoryView.setVisibility(View.VISIBLE);
         mNoHistoryTextView.setVisibility(View.GONE);
 
-        initAd();
+        initAdmob();
     }
 
-    private void initAd(){
-        final NativeExpressAdView nativeAd = (NativeExpressAdView)findViewById(R.id.native_ad_view);
+    private void initAdmob(){
+        if (!Config.ENABLE_INPAGE_ADMOB) {return;}
 
-        AdRequest nativeRequest = new AdRequest.Builder()
+        AdRequest.Builder builder = new AdRequest.Builder()
                 .setGender(AdRequest.GENDER_FEMALE)
-                .addKeyword("baby").addKeyword("mother")
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-                .build();
-        nativeAd.loadAd(nativeRequest);
+                .addKeyword("baby").addKeyword("mother");
+        if (Config.DEBUG) {
+            builder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4");
+        }
+        final NativeExpressAdView nativeAd = (NativeExpressAdView)findViewById(R.id.native_ad_view);
+        nativeAd.loadAd(builder.build());
         nativeAd.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {

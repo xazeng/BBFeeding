@@ -2,6 +2,7 @@ package com.zeng.bbfeeding;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -94,9 +95,10 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.share_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String appPackageName = getPackageName();
                 Intent share = new Intent(android.content.Intent.ACTION_SEND);
                 share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, getString(R.string.apk_install_url));
+                share.putExtra(Intent.EXTRA_TEXT, getString(R.string.apk_web_url)+appPackageName);
                 startActivity(Intent.createChooser(share, getString(R.string.share_title)));
             }
         });
@@ -104,7 +106,12 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.star_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                final String appPackageName = getPackageName();
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.apk_market_url) + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.apk_web_url) + appPackageName)));
+                }
             }
         });
     }

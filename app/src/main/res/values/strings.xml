@@ -44,6 +44,7 @@
     <string name="ad_native_history_id">ca-app-pub-6858874865593788/7997614958</string>
     <string name="ad_banner_home_id">ca-app-pub-6858874865593788/2722380155</string>
     <string name="no_history_label">No History</string>
-    <string name="apk_install_url">https://play.google.com/store/apps/details?id=com.igg.bzbee.deckheroes</string>
+    <string name="apk_web_url">https://play.google.com/store/apps/details?id=</string>
+    <string name="apk_market_url">https://play.google.com/store/apps/details?id=</string>
     <string name="share_title">Share to your friends!</string>
 </resources>

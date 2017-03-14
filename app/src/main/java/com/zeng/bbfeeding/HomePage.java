@@ -50,19 +50,22 @@ public class HomePage extends Page implements View.OnClickListener{
 
         initTimingPanel();
         initAlarmPanel();
-        initAd();
+        initAdmob();
         return;
     }
 
-    private void initAd(){
-        final AdView bannerAd = (AdView)findViewById(R.id.banner_ad_view);
-        AdRequest bannerRequest = new AdRequest.Builder()
+    private void initAdmob(){
+        if (!Config.ENABLE_INPAGE_ADMOB) {return;}
+
+        AdRequest.Builder builder = new AdRequest.Builder()
                 .setGender(AdRequest.GENDER_FEMALE)
-                .addKeyword("baby").addKeyword("mother")
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
-                .build();
-        bannerAd.loadAd(bannerRequest);
+                .addKeyword("baby").addKeyword("mother");
+        if (Config.DEBUG) {
+            builder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4");
+        }
+        final AdView bannerAd = (AdView)findViewById(R.id.banner_ad_view);
+        bannerAd.loadAd(builder.build());
         bannerAd.setVisibility(View.GONE);
         bannerAd.setAdListener(new AdListener() {
             @Override
