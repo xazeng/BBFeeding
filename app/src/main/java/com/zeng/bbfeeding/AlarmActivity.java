@@ -4,6 +4,7 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.os.Vibrator;
@@ -115,6 +116,7 @@ public class AlarmActivity extends AppCompatActivity {
             try {
                 float volume = Data.getInstance().getAlarmVolume() / 100.0f;
                 mMediaPlayer.setDataSource(this, Data.getInstance().getAlarmRingtone());
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
                 mMediaPlayer.setVolume(volume, volume);
                 mMediaPlayer.setLooping(true);
                 mMediaPlayer.prepare();
