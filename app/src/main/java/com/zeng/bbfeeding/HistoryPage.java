@@ -39,6 +39,7 @@ public class HistoryPage extends Page{
         mNoHistoryTextView.setVisibility(View.GONE);
 
         initAdmob();
+        updateHistory();
     }
 
     private void initAdmob(){
@@ -57,7 +58,7 @@ public class HistoryPage extends Page{
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                nativeAd.setVisibility(View.VISIBLE);
+                findViewById(R.id.native_ad_card).setVisibility(View.VISIBLE);
             }
         });
     }
@@ -65,6 +66,10 @@ public class HistoryPage extends Page{
     @Override
     protected void onShowPage() {
         super.onShowPage();
+        updateHistory();
+    }
+
+    private void updateHistory() {
         if (Data.getInstance().mHistoryUpdated){
             Data.getInstance().mHistoryUpdated = false;
 

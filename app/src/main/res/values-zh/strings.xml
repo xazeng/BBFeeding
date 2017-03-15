@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">喂奶助手</string>
-    <string name="tab_history_label">历史记录</string>
+    <string name="tab_history_label">历史</string>
     <string name="tab_home_label">主页</string>
-    <string name="tab_like_label">猜你喜欢</string>
+    <string name="tab_like_label">优惠</string>
     <string name="alarm_volumn_label">音量</string>
     <string name="alarm_type_label">提醒方式</string>
     <string name="alarm_ringtone_label">铃声</string>

@@ -2,7 +2,7 @@
     <string name="app_name">BBFeeding</string>
     <string name="tab_home_label">Home</string>
     <string name="tab_history_label">History</string>
-    <string name="tab_like_label">Like</string>
+    <string name="tab_like_label">Discount</string>
     <string name="time_passed_label">Time passed since the last feeding</string>
     <string name="reset_timing_label">Reset Timing</string>
     <string name="alarm_label">Alarm</string>
@@ -47,4 +47,6 @@
     <string name="apk_web_url">https://play.google.com/store/apps/details?id=</string>
     <string name="apk_market_url">https://play.google.com/store/apps/details?id=</string>
     <string name="share_title">Share to your friends!</string>
+    <string name="like_page_url">https://xazeng.github.io/BBFeeding/en/like/index.html</string>
+
 </resources>
