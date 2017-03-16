@@ -32,6 +32,7 @@ public class Data {
             mAlarmRingtone = Uri.parse(pref.getString(ALARM_RINGTONE, Settings.System.DEFAULT_ALARM_ALERT_URI.toString()));
             mAlarmVolume = pref.getInt(ALARM_VOLUME, 100);
             mFeedingHistory = new StringBuilder(pref.getString(FEEDING_HISTORY, ""));
+            mAdmobEnabled = pref.getBoolean(ADMOB_ENABLED, true);
 
             mEditor = pref.edit();
         }
@@ -47,6 +48,7 @@ public class Data {
         mEditor.putString(ALARM_RINGTONE, mAlarmRingtone.toString());
         mEditor.putInt(ALARM_VOLUME, mAlarmVolume);
         mEditor.putString(FEEDING_HISTORY, mFeedingHistory.toString());
+        mEditor.putBoolean(ADMOB_ENABLED, mAdmobEnabled);
 
         mEditor.apply();
         return;
@@ -118,5 +120,9 @@ public class Data {
     }
     public boolean mHistoryUpdated = true;
 
+    private static final String ADMOB_ENABLED = "admob_enabled";
+    private boolean mAdmobEnabled;
+    public boolean getAdmobEnabled() {return mAdmobEnabled;}
+    public void setAdmobEnabled(boolean b) {mAdmobEnabled = b;}
 
 }

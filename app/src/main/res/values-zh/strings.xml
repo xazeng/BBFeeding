@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">喂奶助手</string>
-    <string name="tab_history_label">历史</string>
+    <string name="tab_history_label">历史记录</string>
     <string name="tab_home_label">主页</string>
-    <string name="tab_like_label">优惠</string>
+    <string name="tab_like_label">宝妈小知识</string>
     <string name="alarm_volumn_label">音量</string>
     <string name="alarm_type_label">提醒方式</string>
     <string name="alarm_ringtone_label">铃声</string>
@@ -44,4 +44,5 @@
     <string name="history_item_time">%1$02d:%2$02d</string>
     <string name="no_history_label">没有历史记录</string>
     <string name="share_title">分享给你的朋友们</string>
+    <string name="like_page_url">http://app.xazeng.com/bbfeeding/zh/index.html</string>
 </resources>

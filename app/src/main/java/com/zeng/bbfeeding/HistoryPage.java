@@ -1,6 +1,7 @@
 package com.zeng.bbfeeding;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,11 +40,18 @@ public class HistoryPage extends Page{
         mNoHistoryTextView.setVisibility(View.GONE);
 
         initAdmob();
-        updateHistory();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updateHistory();
+            }
+        }, 1000);
     }
 
     private void initAdmob(){
         if (!Config.ENABLE_INPAGE_ADMOB) {return;}
+        if (!Data.getInstance().getAdmobEnabled()) {return;}
 
         AdRequest.Builder builder = new AdRequest.Builder()
                 .setGender(AdRequest.GENDER_FEMALE)

@@ -56,6 +56,7 @@ public class HomePage extends Page implements View.OnClickListener{
 
     private void initAdmob(){
         if (!Config.ENABLE_INPAGE_ADMOB) {return;}
+        if (!Data.getInstance().getAdmobEnabled()) {return;}
 
         AdRequest.Builder builder = new AdRequest.Builder()
                 .setGender(AdRequest.GENDER_FEMALE)
