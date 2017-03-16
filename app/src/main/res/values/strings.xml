@@ -48,5 +48,6 @@
     <string name="apk_market_url">market://details?id=</string>
     <string name="share_title">Share to your friends!</string>
     <string name="like_page_url">http://app.xazeng.com/bbfeeding/en/index.html</string>
+    <string name="exit_toast">Click BACK again to EXIT.</string>
 
 </resources>

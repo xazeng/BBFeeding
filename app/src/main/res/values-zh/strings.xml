@@ -45,4 +45,5 @@
     <string name="no_history_label">没有历史记录</string>
     <string name="share_title">分享给你的朋友们</string>
     <string name="like_page_url">http://app.xazeng.com/bbfeeding/zh/index.html</string>
+    <string name="exit_toast">再按一次退出程序</string>
 </resources>
