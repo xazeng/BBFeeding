@@ -2,7 +2,7 @@
     <string name="app_name">BBFeeding</string>
     <string name="tab_home_label">Home</string>
     <string name="tab_history_label">History</string>
-    <string name="tab_like_label">Mom Tips</string>
+    <string name="tab_like_label">Specials</string>
     <string name="time_passed_label">Time passed since the last feeding</string>
     <string name="reset_timing_label">Reset Timing</string>
     <string name="alarm_label">Alarm</string>

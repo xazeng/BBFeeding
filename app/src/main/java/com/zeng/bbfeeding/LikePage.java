@@ -29,6 +29,7 @@ public class LikePage extends Page{
     private WebView mWebView;
     private ProgressBar mProgressBar;
     private boolean mLoaded = false;
+    private boolean mRedirect = false;
 
     @Override
     protected void onCreatePage(@Nullable Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class LikePage extends Page{
         mWebView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                mProgressBar.setProgress(newProgress);
+                // mProgressBar.setProgress(newProgress);
                 if (newProgress == 100) {
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -59,7 +60,7 @@ public class LikePage extends Page{
         mWebView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (URLUtil.isNetworkUrl(url)) {
+                if (!mRedirect && URLUtil.isNetworkUrl(url)) {
                     view.loadUrl(url);
                 } else {
                     try {
@@ -87,7 +88,7 @@ public class LikePage extends Page{
                     mWebView.loadUrl(getString(R.string.like_page_url));
                 }
             }
-        }, 3000);
+        }, 1000);
     }
 
     @Override
@@ -100,10 +101,6 @@ public class LikePage extends Page{
     }
 
     class JsObject {
-        @JavascriptInterface
-        public String test() {return "javascript inject test";}
-
-
         @JavascriptInterface
         public void actionSend(String title, String content) {
             Intent share = new Intent(android.content.Intent.ACTION_SEND);
@@ -121,6 +118,9 @@ public class LikePage extends Page{
             }
             return true;
         }
+
+        @JavascriptInterface
+        public void enableRedirect(boolean enable ) {mRedirect = enable;}
 
         @JavascriptInterface
         public int getVersion() {return Config.VERSION;}
