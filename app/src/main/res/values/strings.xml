@@ -22,10 +22,10 @@
     <string name="breast_interval_label">Interval:</string>
     <string name="formula_intake_edittext_hint">(ml)</string>
     <string name="formula_intake_label">Intake:</string>
-    <string name="last_breast_feeding_info_format">Last Feeding: %1$02d:%2$02d, breast(%3$s), %4$s min</string>
+    <string name="last_breast_feeding_info_format">%1$02d:%2$02d, breast(%3$s), %4$s min</string>
     <string name="str_left">left</string>
     <string name="str_right">right</string>
-    <string name="last_formula_feeding_info_format">Last Feeding: %1$02d:%2$02, formula, %3$s ml</string>
+    <string name="last_formula_feeding_info_format">%1$02d:%2$02d, formula, %3$s ml</string>
     <string name="last_feeding_info_default">Last Feeding Information: ...</string>
     <string name="alarm_interval_format">%1$02dh %2$02dmin</string>
     <string name="unit_hour">hour</string>

@@ -70,6 +70,12 @@ public class LikePage extends Page{
                 }
                 return true;
             }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                view.loadUrl("about:blank");
+            }
         });
         mWebView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
