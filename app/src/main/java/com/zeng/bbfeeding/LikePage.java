@@ -38,6 +38,7 @@ public class LikePage extends Page{
         mProgressBar = (ProgressBar)findViewById(R.id.progress_bar);
         mWebView = (WebView)findViewById(R.id.web_view);
         mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setDefaultTextEncodingName("utf8");
         // mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setWebChromeClient(new WebChromeClient(){

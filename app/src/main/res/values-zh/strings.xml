@@ -3,7 +3,7 @@
     <string name="app_name">喂奶助手</string>
     <string name="tab_history_label">历史记录</string>
     <string name="tab_home_label">主页</string>
-    <string name="tab_like_label">每日精选</string>
+    <string name="tab_like_label">小知识</string>
     <string name="alarm_volumn_label">音量</string>
     <string name="alarm_type_label">提醒方式</string>
     <string name="alarm_ringtone_label">铃声</string>
@@ -44,7 +44,7 @@
     <string name="history_item_time">%1$02d:%2$02d</string>
     <string name="no_history_label">没有历史记录</string>
     <string name="share_title">分享给你的朋友们</string>
-    <string name="like_page_url">http://app.xazeng.com/bbfeeding/zh/index.html</string>
+    <string name="like_page_url">http://app.xazeng.com/bbfeeding/tips.html</string>
     <string name="exit_toast">再按一次退出程序</string>
     <string name="ad_banner_home_id">ca-app-pub-6858874865593788/2722380155</string>
     <string name="ad_native_history_id">ca-app-pub-6858874865593788/7997614958</string>

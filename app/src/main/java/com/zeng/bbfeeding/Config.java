@@ -6,7 +6,7 @@ package com.zeng.bbfeeding;
 
 public class Config {
     public static final boolean DEBUG = false;
-    public static final boolean ENABLE_INPAGE_ADMOB = true;
+    public static final boolean ENABLE_INPAGE_ADMOB = false;
     public static final int VERSION = 1;
-    public static final String MARKET = "google";
+    public static final String MARKET = "china";
 }
