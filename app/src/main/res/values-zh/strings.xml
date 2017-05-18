@@ -49,5 +49,5 @@
     <string name="ad_banner_home_id">ca-app-pub-6858874865593788/2722380155</string>
     <string name="ad_native_history_id">ca-app-pub-6858874865593788/7997614958</string>
     <string name="apk_market_url">market://details?id=</string>
-    <string name="apk_web_url">https://play.google.com/store/apps/details?id=</string>
+    <string name="apk_web_url">http://app.qq.com/#id=detail&amp;appid=1105773112</string>
 </resources>

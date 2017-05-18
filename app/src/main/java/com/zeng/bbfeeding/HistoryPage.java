@@ -13,11 +13,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.NativeExpressAdView;
-
 /**
  * Created by xianganzeng on 2016/10/27.
  */
@@ -39,36 +34,12 @@ public class HistoryPage extends Page{
         mHistoryView.setVisibility(View.VISIBLE);
         mNoHistoryTextView.setVisibility(View.GONE);
 
-        initAdmob();
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 updateHistory();
             }
         }, 1000);
-    }
-
-    private void initAdmob(){
-        if (!Config.ENABLE_INPAGE_ADMOB) {return;}
-        if (!Data.getInstance().getAdmobEnabled()) {return;}
-
-        AdRequest.Builder builder = new AdRequest.Builder()
-                .setGender(AdRequest.GENDER_FEMALE)
-                .addKeyword("baby").addKeyword("mother");
-        if (Config.DEBUG) {
-            builder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4");
-        }
-        final NativeExpressAdView nativeAd = (NativeExpressAdView)findViewById(R.id.native_ad_view);
-        nativeAd.loadAd(builder.build());
-        nativeAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                findViewById(R.id.native_ad_card).setVisibility(View.VISIBLE);
-            }
-        });
     }
 
     @Override

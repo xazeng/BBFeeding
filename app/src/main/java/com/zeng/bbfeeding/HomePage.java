@@ -21,10 +21,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -50,31 +46,7 @@ public class HomePage extends Page implements View.OnClickListener{
 
         initTimingPanel();
         initAlarmPanel();
-        initAdmob();
         return;
-    }
-
-    private void initAdmob(){
-        if (!Config.ENABLE_INPAGE_ADMOB) {return;}
-        if (!Data.getInstance().getAdmobEnabled()) {return;}
-
-        AdRequest.Builder builder = new AdRequest.Builder()
-                .setGender(AdRequest.GENDER_FEMALE)
-                .addKeyword("baby").addKeyword("mother");
-        if (Config.DEBUG) {
-            builder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4");
-        }
-        final AdView bannerAd = (AdView)findViewById(R.id.banner_ad_view);
-        bannerAd.loadAd(builder.build());
-        bannerAd.setVisibility(View.GONE);
-        bannerAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                bannerAd.setVisibility(View.VISIBLE);
-            }
-        });
     }
 
     private void initTimingPanel(){

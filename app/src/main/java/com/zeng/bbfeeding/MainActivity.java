@@ -20,7 +20,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.MobileAds;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Data.getInstance().init(this);
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-6858874865593788~1172352152");
 
         mViewPager = (ViewPager)findViewById(R.id.view_pager);
         mBottomBar = (BottomBar)findViewById(R.id.bottom_bar);
@@ -97,10 +95,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.share_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String appPackageName = getPackageName();
                 Intent share = new Intent(android.content.Intent.ACTION_SEND);
                 share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, getString(R.string.apk_web_url)+appPackageName);
+                share.putExtra(Intent.EXTRA_TEXT, getString(R.string.apk_web_url));
                 startActivity(Intent.createChooser(share, getString(R.string.share_title)));
             }
         });
@@ -112,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.apk_market_url) + appPackageName)));
                 } catch (android.content.ActivityNotFoundException anfe) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.apk_web_url) + appPackageName)));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.apk_web_url))));
                 }
             }
         });
