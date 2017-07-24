@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BBFeeding</string>
-    <string name="tab_home_label">Home</string>
-    <string name="tab_history_label">History</string>
-    <string name="tab_like_label">Tips</string>
+    <string name="title_home">Home</string>
+    <string name="title_history">History</string>
+    <string name="title_coupon">Coupons</string>
     <string name="time_passed_label">Time passed since the last feeding</string>
     <string name="reset_timing_label">Reset Timing</string>
     <string name="alarm_label">Alarm</string>
@@ -47,7 +47,11 @@
     <string name="apk_web_url">http://app.qq.com/#id=detail&amp;appid=1105773112</string>
     <string name="apk_market_url">market://details?id=</string>
     <string name="share_title">Share to your friends!</string>
-    <string name="like_page_url">http://app.xazeng.com/bbfeeding/tips.html</string>
+    <string name="like_page_url">http://store.xazeng.com/taobao/mom_baby/index.html</string>
     <string name="exit_toast">Click BACK again to EXIT.</string>
+
+    <string name="title_activity_browser">BrowserActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

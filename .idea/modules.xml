@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BBFeeding.iml" filepath="$PROJECT_DIR$/BBFeeding.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bottom-bar/bottom-bar.iml" filepath="$PROJECT_DIR$/bottom-bar/bottom-bar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/slide_unlock_view/slide_unlock_view.iml" filepath="$PROJECT_DIR$/slide_unlock_view/slide_unlock_view.iml" />
     </modules>
   </component>
 </project>

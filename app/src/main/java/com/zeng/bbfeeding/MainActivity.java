@@ -2,71 +2,49 @@ package com.zeng.bbfeeding;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.net.Uri;
+import android.databinding.DataBindingUtil;
 import android.os.Build;
-import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
+import com.zeng.bbfeeding.databinding.ActivityMainBinding;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private int mPagePosition;
-    private int mPrePagePosition;
-    private Page[] mPages;
-    private int[] mTabIds;
-
-    private ViewPager mViewPager;
-    private BottomBar mBottomBar;
+    private ActivityMainBinding mBinding;
+    private int mCurPageIndex = 0;
+    private int mPrePageIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
         Data.getInstance().init(this);
 
-        mViewPager = (ViewPager)findViewById(R.id.view_pager);
-        mBottomBar = (BottomBar)findViewById(R.id.bottom_bar);
-
-        mPagePosition = 0;
-        mPrePagePosition = 0;
-        mPages = new Page[]{
-                new HomePage(),
-                new HistoryPage(),
-                new LikePage(),
-        };
-        mTabIds = new int[]{
-                R.id.tab_home,
-                R.id.tab_history,
-                R.id.tab_like,
-        };
-
         initStatusBar();
-        initToolBar();
-        initViewPager();
-        initBottomBar();
-
-        return;
+        initToolbar();
+        initPager();
+        initNavigation();
     }
 
     @TargetApi(19)
-    private void initStatusBar(){
+    private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // 设置状态栏透明
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
             // 生成一个状态栏大小的矩形
@@ -91,87 +69,87 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initToolBar(){
-        findViewById(R.id.share_button).setOnClickListener(new View.OnClickListener() {
+    private void initToolbar(){
+        mBinding.toolbar.shareButton.setOnClickListener(new View.OnClickListener(){
+
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent share = new Intent(android.content.Intent.ACTION_SEND);
                 share.setType("text/plain");
                 share.putExtra(Intent.EXTRA_TEXT, getString(R.string.apk_web_url));
                 startActivity(Intent.createChooser(share, getString(R.string.share_title)));
             }
         });
-
-        findViewById(R.id.star_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String appPackageName = getPackageName();
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.apk_market_url) + appPackageName)));
-                } catch (android.content.ActivityNotFoundException anfe) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.apk_web_url))));
-                }
-            }
-        });
     }
 
-    private void initViewPager(){
-        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+    private void initPager(){
+
+        final Page[] pages = new Page[]{
+                new HomePage(),
+                new HistoryPage(),
+                new CouponPage()
+        };
+
+        mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return mPages[position];
+                return pages[position];
             }
 
             @Override
             public int getCount() {
-                return mPages.length;
+                return  pages.length;
             }
         });
 
-        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        mBinding.viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                if (position != mPrePagePosition) {
-                    mPages[mPrePagePosition].onHidePage();
-                    mPages[position].onShowPage();
-                    mPrePagePosition = position;
+                if (position != mPrePageIndex) {
+                    pages[mPrePageIndex].onHidePage();
+                    pages[position].onShowPage();
+                    mPrePageIndex = position;
                 }
+                if (position != mCurPageIndex) {
+                    mCurPageIndex = position;
 
-                if (position != mPagePosition){
-                    mPagePosition = position;
-                    mBottomBar.selectTabAtPosition(position);
+                    int resId = R.id.navigation_home;
+                    if (position == 1) {resId = R.id.navigation_history;}
+                    else if (position == 2) {resId = R.id.navigation_coupon;}
+                    mBinding.navigation.setSelectedItemId(resId);
                 }
             }
         });
     }
 
-    private void initBottomBar() {
-        mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+    private void initNavigation(){
+        mBinding.navigation.setOnNavigationItemSelectedListener( new BottomNavigationView.OnNavigationItemSelectedListener() {
+
             @Override
-            public void onTabSelected(@IdRes int tabId) {
-                int position = 0;
-                for (; position < mTabIds.length; ++position){
-                    if (mTabIds[position] == tabId) break;
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int idx = -1;
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        idx = 0;
+                        break;
+                    case R.id.navigation_history:
+                        idx = 1;
+                        break;
+                    case R.id.navigation_coupon:
+                        idx = 2;
+                        break;
+                }
+                if (idx == -1) return false;
+
+                if (mCurPageIndex != idx) {
+                    mCurPageIndex = idx;
+                    mBinding.viewPager.setCurrentItem(idx, true);
                 }
 
-                if (position != mPagePosition) {
-                    mPagePosition = position;
-                    mViewPager.setCurrentItem(position, true);
-                }
+                return true;
             }
         });
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Data.getInstance().save();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     private long exitTime = 0;
@@ -189,4 +167,16 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Data.getInstance().save();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
 }
