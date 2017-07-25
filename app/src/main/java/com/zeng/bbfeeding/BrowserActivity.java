@@ -52,6 +52,12 @@ public class BrowserActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
     private void initWebView(){
         mBinding.webView.getSettings().setJavaScriptEnabled(true);
         mBinding.webView.getSettings().setDefaultTextEncodingName("utf8");
@@ -77,7 +83,10 @@ public class BrowserActivity extends AppCompatActivity {
                     view.loadUrl(url);
                 } else {
                     try {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
                     } catch (android.content.ActivityNotFoundException anfe) {
                     }
                 }

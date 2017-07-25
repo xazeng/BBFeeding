@@ -7,4 +7,6 @@
     <color name="colorHistoryItemDark">#f5f5f5</color>
     <color name="colorHistoryItemLight">#ffffff</color>
 
+    <color name="colorButtonGray">#21000000</color>
+
 </resources>
