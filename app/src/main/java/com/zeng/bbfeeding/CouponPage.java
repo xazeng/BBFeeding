@@ -72,15 +72,15 @@ public class CouponPage extends Page{
 
         mWebView.addJavascriptInterface(new JsObject(), "android");
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!mLoaded) {
-                    mLoaded = true;
-                    mWebView.loadUrl(getString(R.string.like_page_url));
-                }
-            }
-        }, 1000);
+        // new Handler().postDelayed(new Runnable() {
+        //     @Override
+        //     public void run() {
+        //         if (!mLoaded) {
+        //             mLoaded = true;
+        //             mWebView.loadUrl(getString(R.string.like_page_url));
+        //         }
+        //     }
+        // }, 1000);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class CouponPage extends Page{
         super.onShowPage();
         if (!mLoaded) {
             mLoaded = true;
-            mWebView.loadUrl(getString(R.string.like_page_url));
+            mWebView.loadUrl(getString(R.string.coupon_page_url));
         }
     }
 

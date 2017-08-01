@@ -41,17 +41,10 @@
     <string name="history_item_formula_intake">%1$s ml</string>
     <string name="history_item_time">%1$02d:%2$02d</string>
     <string name="history_item_date">%1$d-%2$d-%3$d</string>
-    <string name="ad_native_history_id">ca-app-pub-6858874865593788/7997614958</string>
-    <string name="ad_banner_home_id">ca-app-pub-6858874865593788/2722380155</string>
     <string name="no_history_label">No History</string>
-    <string name="apk_web_url">http://app.qq.com/#id=detail&amp;appid=1105773112</string>
-    <string name="apk_market_url">market://details?id=</string>
+    <string name="apk_web_url">https://play.google.com/store/apps/details?id=com.zeng.bbfeeding</string>
     <string name="share_title">Share to your friends!</string>
-    <string name="like_page_url">http://store.xazeng.com/taobao/mom_baby/index.html</string>
+    <string name="coupon_page_url">http://store.xazeng.com/app/bbfeeding/</string>
     <string name="exit_toast">Click BACK again to EXIT.</string>
-
-    <string name="title_activity_browser">BrowserActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>
