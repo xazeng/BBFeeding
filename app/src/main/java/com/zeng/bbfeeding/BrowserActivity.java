@@ -1,9 +1,12 @@
 package com.zeng.bbfeeding;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -19,6 +23,7 @@ import com.zeng.bbfeeding.databinding.ActivityBrowserBinding;
 public class BrowserActivity extends AppCompatActivity {
 
     private ActivityBrowserBinding mBinding = null;
+    private boolean mMasterMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class BrowserActivity extends AppCompatActivity {
             }
         });
 
+        initToolbar();
         initWebView();
     }
 
@@ -53,40 +59,92 @@ public class BrowserActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
+    protected void onDestroy() {
+        super.onDestroy();
+        mBinding.webView.removeAllViews();
+        mBinding.webView.destroy();
+    }
+
+    private void initToolbar(){
+        mBinding.shareImageView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent share = new Intent(android.content.Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, mBinding.webView.getOriginalUrl());
+                startActivity(Intent.createChooser(share, getString(R.string.share_title)));
+            }
+        });
+
+        mBinding.refreshImageView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                mBinding.webView.loadUrl(mBinding.webView.getUrl());
+            }
+        });
+
+        mBinding.closeImageView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void initWebView(){
-        mBinding.webView.getSettings().setJavaScriptEnabled(true);
-        mBinding.webView.getSettings().setDefaultTextEncodingName("utf8");
-        // mBinding.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        WebSettings settings = mBinding.webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDefaultTextEncodingName("utf8");
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setDisplayZoomControls(false);
+
         mBinding.webView.setHorizontalScrollBarEnabled(false);
         mBinding.webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 mBinding.progressBar.setProgress(newProgress);
-            }
-
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                super.onReceivedTitle(view, title);
-                mBinding.titleTextView.setText(title);
+                if (newProgress == 100) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBinding.progressBar.setVisibility(View.GONE);
+                        }
+                    }, 500);
+                }
+                else {
+                    mBinding.progressBar.setVisibility(View.VISIBLE);
+                }
             }
         });
         mBinding.webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (URLUtil.isNetworkUrl(url)) {
-                    mBinding.titleTextView.setText(url);
-                    view.loadUrl(url);
+                    if (mMasterMode) {
+                        Intent intent = new Intent(BrowserActivity.this, BrowserActivity.class);
+                        intent.putExtra("url", url);
+                        startActivity(intent);
+                    } else {
+                        view.loadUrl(url);
+                    }
                 } else {
                     try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
+                        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        if (getPackageManager().resolveActivity(intent, 0) != null) {
+                            new AlertDialog.Builder(BrowserActivity.this)
+                                    .setTitle(R.string.active_external_app_note)
+                                    .setMessage(R.string.active_external_app_confirm)
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .setNegativeButton(android.R.string.cancel, null)
+                                    .show();
+                        }
                     } catch (android.content.ActivityNotFoundException anfe) {
                     }
                 }
@@ -94,9 +152,21 @@ public class BrowserActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                mBinding.titleTextView.setText(R.string.web_title_loading);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mBinding.titleTextView.setText(view.getTitle());
+            }
+
+            @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
-                view.loadUrl("about:blank");
+                view.loadData(String.format(getString(R.string.web_error_info), errorCode, description), "text/html", "utf8");
             }
         });
         mBinding.webView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -106,92 +176,55 @@ public class BrowserActivity extends AppCompatActivity {
             }
         });
 
-        mBinding.webView.addJavascriptInterface(new JsObject(), "android");
+        mBinding.webView.addJavascriptInterface(new JsInterface(), "ajs");
 
         String url = getIntent().getStringExtra("url");
-        mBinding.titleTextView.setText(url);
         mBinding.webView.loadUrl(url);
     }
 
-    class JsObject {
-        @JavascriptInterface
-        public void actionSend(String title, String content) {
-            Intent share = new Intent(android.content.Intent.ACTION_SEND);
-            share.setType("text/plain");
-            share.putExtra(Intent.EXTRA_TEXT, content);
-            startActivity(Intent.createChooser(share, title));
-        }
+    class JsInterface {
 
         @JavascriptInterface
-        public boolean actionView(String uri) {
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
-            } catch (android.content.ActivityNotFoundException anfe) {
-                return false;
-            }
-            return true;
-        }
-
-        ///////////////////////////////////////////////////////////
-        // webview interface
-        @JavascriptInterface
-        public void wv_canGoBack() {
-            mBinding.webView.post(new Runnable() {
+        public void actionSend(final String title, final String content) {
+            mBinding.getRoot().post(new Runnable() {
                 @Override
                 public void run() {
-                    mBinding.webView.canGoBack();
+                    Intent share = new Intent(android.content.Intent.ACTION_SEND);
+                    share.setType("text/plain");
+                    share.putExtra(Intent.EXTRA_TEXT, content);
+                    startActivity(Intent.createChooser(share, title));
                 }
             });
         }
 
         @JavascriptInterface
-        public void wv_goBack() {
-            mBinding.webView.post(new Runnable() {
+        public void actionView(final String url) {
+            mBinding.getRoot().post(new Runnable() {
                 @Override
                 public void run() {
-                    mBinding.webView.goBack();
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    } catch (android.content.ActivityNotFoundException anfe) {
+                    }
                 }
             });
         }
 
         @JavascriptInterface
-        public void wv_goForward() {
-            mBinding.webView.post(new Runnable() {
+        public void loadUrl(final String url) {
+            mBinding.getRoot().post(new Runnable() {
                 @Override
                 public void run() {
-                    mBinding.webView.goForward();
+                    Intent intent = new Intent(BrowserActivity.this, BrowserActivity.class);
+                    intent.putExtra("url", url);
+                    startActivity(intent);
                 }
             });
         }
 
         @JavascriptInterface
-        public void wv_reload() {
-            mBinding.webView.post(new Runnable() {
-                @Override
-                public void run() {
-                    mBinding.webView.reload();
-                }
-            });
-        }
-
-        @JavascriptInterface
-        public void wv_clearCache(final boolean includeDiskFiles) {
-            mBinding.webView.post(new Runnable() {
-                @Override
-                public void run() {
-                    mBinding.webView.clearCache(includeDiskFiles);
-                }
-            });
-        }
-
-        @JavascriptInterface
-        public void wv_clearHistory() {
-            mBinding.webView.post(new Runnable() {
-                @Override
-                public void run() {
-                    mBinding.webView.clearHistory();
-                }
-            });
+        public void setMasterMode(boolean enable) {
+            mMasterMode = enable;
         }
     }
 }

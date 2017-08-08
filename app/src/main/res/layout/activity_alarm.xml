@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/alarm_content"
-        android:id="@+id/imageView2"
         android:layout_alignParentTop="true"
         android:scaleType="fitStart" />
 
