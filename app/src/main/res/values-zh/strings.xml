@@ -50,4 +50,8 @@
     <string name="web_error_info"><![CDATA[<p>错误码: %1$d<br/>错误信息: %2$s</p><br/><p><b>请开启您的网络，然后点击右上方的刷新按钮。</b></p>]]></string>
     <string name="web_title_loading">加载中...</string>
     <string name="active_external_app_note">即将打开【%1$s】</string>
+    <string name="privacy_title">服务协议和隐私政策</string>
+    <string name="agree">同意</string>
+    <string name="disagree">不同意</string>
+    <string name="privacy_text"><![CDATA[<p>请你务必审慎阅读、充分理解“服务协议”和“隐私政策”各条款，包括但不限于：为了向你提供内容推荐、内容分享等服务，我们需要手机你的设备信息、操作日志等个人信息。你可以在“设置”中查看、变更、删除个人信息并管理你的授权。</p> <p>你可以阅读<a href="https://xazeng.github.io/app/bbfeeding/user_agreement.html">《服务协议》</a>和<a href="https://xazeng.github.io/app/bbfeeding/privacy_policy.html">《隐私政策》</a>了解详细信息。如你同意，请点击“同意”开始接受我们的服务。</p>]]></string>
 </resources>

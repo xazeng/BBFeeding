@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BBFeeding.iml" filepath="$PROJECT_DIR$/BBFeeding.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BBFeeding-BBFeeding.iml" filepath="$PROJECT_DIR$/.idea/modules/BBFeeding-BBFeeding.iml" group="BBFeeding" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="BBFeeding/app" />
     </modules>
   </component>
 </project>

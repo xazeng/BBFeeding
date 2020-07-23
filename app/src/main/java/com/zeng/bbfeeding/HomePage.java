@@ -46,6 +46,12 @@ public class HomePage extends Page implements View.OnClickListener{
 
         initTimingPanel();
         initAlarmPanel();
+
+        if (!Data.getInstance().getPrivacyChecked()) {
+            PrivacyDialog privacyDlg = new PrivacyDialog();
+            privacyDlg.show(getFragmentManager(), "...");
+        }
+
         return;
     }
 

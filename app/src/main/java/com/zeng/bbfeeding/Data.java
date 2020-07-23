@@ -33,6 +33,7 @@ public class Data {
             mAlarmVolume = pref.getInt(ALARM_VOLUME, 100);
             mFeedingHistory = new StringBuilder(pref.getString(FEEDING_HISTORY, ""));
             mAdmobEnabled = pref.getBoolean(ADMOB_ENABLED, true);
+            mPrivacyChecked = pref.getBoolean(PRIVACY_CHECKED, false);
 
             mEditor = pref.edit();
         }
@@ -49,6 +50,7 @@ public class Data {
         mEditor.putInt(ALARM_VOLUME, mAlarmVolume);
         mEditor.putString(FEEDING_HISTORY, mFeedingHistory.toString());
         mEditor.putBoolean(ADMOB_ENABLED, mAdmobEnabled);
+        mEditor.putBoolean(PRIVACY_CHECKED, mPrivacyChecked);
 
         mEditor.apply();
         return;
@@ -124,5 +126,12 @@ public class Data {
     private boolean mAdmobEnabled;
     public boolean getAdmobEnabled() {return mAdmobEnabled;}
     public void setAdmobEnabled(boolean b) {mAdmobEnabled = b;}
+
+    private static final String PRIVACY_CHECKED = "privacy_checked";
+    private boolean mPrivacyChecked;
+    public boolean getPrivacyChecked() {return mPrivacyChecked;}
+    public void setPrivacyChecked(boolean b) {
+        mPrivacyChecked = b;
+    }
 
 }

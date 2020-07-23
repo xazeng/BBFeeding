@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '29.0.2'
     defaultConfig {
         applicationId "com.zeng.bbfeeding"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 6
-        versionName "6.0"
+        versionCode 601
+        versionName "6.01"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
